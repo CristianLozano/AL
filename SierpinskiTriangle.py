@@ -2,11 +2,12 @@ import pygame
 import math
 import random
 
-
+#Parameters of sierpinski, width and height of screen and number of points to iterate.
 width = 400
 height = 400
 points = 3
 
+#Library pygame start, seting of screen and color filler (r,g,b), parameter black for points.
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 currentColor = (255,255,255)
@@ -14,7 +15,7 @@ screen.fill(currentColor)
 black = (0,0,0)
 
 
-# draw a circle
+#Setting center of circle in middle of screen and radius of less distance.
 center_x = width/2
 center_y = height/2
 
@@ -24,68 +25,48 @@ else:
     radius = height/2
 
 
-
-
+#Generation of random start in the screen size.
 x = random.randint(1,width)
 y = random.randint(1,height)
 
+#Array of positions of points, tuples.
 positions = []
 
 
-
+#Generation of positions of points in the circle.
 for i in range(points):
+
+    #Angle of the circunference, start at x = 0 y = width/2
     ang = ((i * math.pi * 2) / points) - (math.pi/2)
     dx = int(math.cos(ang) * radius)
     dy = int(math.sin(ang) * radius)
-    #print("dx ", dx, " dy ", dy)
+
+    #Real positions of x and y of points.
     x1 = center_x + dx
     y1 = center_y + dy
-    #print("x1 ", x1, " y1 ", y1)
+
+    #Add position of point to array in tuple.
     positions.append((x1,y1))
 
-print(positions)
-
-#x12 = (400,0)
-#x56 = (800,800)
-#x34 = (0,800)
-#x78 = (0,400)
-
+#Start of pygame graphing
 done = False
  
 while not done:
 
+        #Select random start point to move
         step = random.randint(1,points)
 
-        #screen.set_at(point,black)
+        #Define the new point in the screen, depends on the points defined to give the divition.
+        x = (int(((x+positions[step - 1][0]))/ (points - 1)))
+        y = (int(((y+positions[step - 1][1]))/ (points - 1)))
 
-        x = (int(((x+positions[step - 1][0]))/ (points - 1)))#*(points - 2)
-        y = (int(((y+positions[step - 1][1]))/ (points - 1)))#*(points - 2)
+        #Draw a point in the new point position
         screen.set_at((x*(points - 2),y*(points - 2)),black)
 
-        '''
-        if step == 1:
-            x = int((x+positions[0][0])/ 2)
-            y = int((y+positions[0][1])/ 2)
-            screen.set_at((x,y),black)    
-        elif step == 2:
-            x = int((x+positions[1][0])/ 2)
-            y = int((y+positions[1][1])/ 2)
-            screen.set_at((x,y),black)
-        elif step == 3 :
-            x = int((x+positions[2][0])/ 2)
-            y = int((y+positions[2][1])/ 2)
-            screen.set_at((x,y),black)
-        elif step == 4 :
-            x = int(2*(x+positions[3][0])/2)
-            y = int(2*(y+positions[3][1])/2)
-            screen.set_at((x,y),black)
-        '''
-
+        #Pygame control of window quit/close
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                         done = True
 
+        #Pygame display refresh, updates every frame.
         pygame.display.flip()
-
-
-
