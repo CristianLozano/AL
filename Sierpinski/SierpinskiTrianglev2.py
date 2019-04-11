@@ -15,18 +15,18 @@ turtle.hideturtle()
 done = False
 i = 0
 while True:
-    choice = random.randint(1,6)
-    if choice == 1 or choice == 2:
+    choice = random.randint(1,3)
+    if choice == 1:
         x = int((x+v1[0])/2)
         y = int((y+v1[1])/2)
         turtle.setpos(x,y)
         turtle.dot()
-    elif choice == 3 or choice == 4:
+    elif choice == 2:
         x = int((x+v2[0])/2)
         y = int((y+v2[1])/2)
         turtle.setpos(x,y)
         turtle.dot()
-    elif choice == 5 or choice == 6:
+    elif choice == 3:
         x = int((x+v3[0])/2)
         y = int((y+v3[1])/2)
         turtle.setpos(x,y)
