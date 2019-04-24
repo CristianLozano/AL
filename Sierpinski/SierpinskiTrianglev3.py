@@ -5,7 +5,7 @@ import random
 #Parameters of sierpinski, width and height of screen and number of points to iterate.
 width = 400
 height = 400
-points = 10
+points = 3
 
 #Library pygame start, seting of screen and color filler (r,g,b), parameter black for points.
 pygame.init()

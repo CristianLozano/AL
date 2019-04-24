@@ -6,12 +6,12 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.colors import cnames
 from matplotlib import animation
 
-N_trajectories = 5
+N_trajectories = 10
 
 
-def lorentz_deriv(state, t0, sigma=10., beta=8./3, rho=28.0):
+def lorenz_deriv(state, t0, sigma=10., beta=8./3, rho=28.0):
     x,y,z = state
-    """Compute the time-derivative of a Lorentz system."""
+    """Compute the time-derivative of a Lorenz system."""
     return [sigma * (y - x), x * (rho - z) - y, x * y - beta * z]
 
 
@@ -21,7 +21,7 @@ x0 = -15 + 30 * np.random.random((N_trajectories, 3))
 
 # Solve for the trajectories
 t = np.linspace(0, 4, 5000)
-x_t = np.asarray([integrate.odeint(lorentz_deriv, x0i, t)
+x_t = np.asarray([integrate.odeint(lorenz_deriv, x0i, t)
                   for x0i in x0])
 
 # Set up figure & 3D axis for animation
@@ -75,9 +75,9 @@ def animate(i):
 
 # instantiate the animator.
 anim = animation.FuncAnimation(fig, animate, init_func=init,
-                               frames=5000, interval=30, blit=True)
+                               frames=100000, interval=1, blit=True)
 
 # Save as mp4. This requires mplayer or ffmpeg to be installed
-anim.save('lorenz_attractor.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+#anim.save('lorenz_attractor.mp4', fps=60, extra_args=['-vcodec', 'libx264'])
 
 plt.show()

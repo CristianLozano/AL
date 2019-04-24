@@ -10,6 +10,7 @@ y = random.randint(0,400)
 v1 = (200,0)
 v2 = (0,400)
 v3 = (400,400)
+turtle.speed(0)
 turtle.up()
 turtle.hideturtle()
 done = False
