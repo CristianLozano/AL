@@ -1,6 +1,7 @@
 import sys
 import re
 from collections import Counter
+from collections import OrderedDict
 import matplotlib.pyplot as plt
 
 # frequency of letters in both languages
@@ -93,26 +94,35 @@ frequency = {k: v / total for total in (sum(letter_count.values()),) for k, v in
 # get % in 100s
 # for key in frequency:
 #   frequency[key] *= 100
-print(letter_count)
+# print(letter_count)
 # print(total)
 # print(frequency)
 
 # predict which language is the text in
 
+sorted_freq = OrderedDict(sorted(frequency.items(), key=lambda kv: kv[1], reverse=True))
+
+#print(sorted_freq)
+
 
 def predict(lang1, lang2, input):
+
     diff_of_freq1 = {k: abs(lang1.get(k, 0) - input.get(k, 0)) for k in set(lang1) | set(input)}
     score1 = sum(diff_of_freq1.values())
     diff_of_freq2 = {k: abs(lang2.get(k, 0) - input.get(k, 0)) for k in set(lang2) | set(input)}
     score2 = sum(diff_of_freq2.values())
-    return "spanish " + str(score1), "english " + str(score2)
+    if score1 <= score2:
+        return "spanish"
+    else:
+        return "english"
 
 
 print(predict(spanish, english, frequency))
 
 # plot letter frequency in text
-#plt.bar(range(len(frequency)), list(frequency.values()), align='center')
-#plt.xticks(range(len(frequency)), list(frequency.keys()))
-#plt.show()
+plt.title("Letter Frequency")
+plt.bar(range(len(frequency)), list(frequency.values()), align='center')
+plt.xticks(range(len(frequency)), list(frequency.keys()))
+plt.show()
 
 # sacar frecuencia en % del texto? no pero ya esta eso, en lugar de frecuencia, orden?
