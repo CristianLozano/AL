@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4683ed97-c2d3-41d3-a2b9-8abc7b5ab77d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Turing Morph/turing_morph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cellular Automata/automaton.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cellular Automata/automaton.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,10 +14,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Cellular Automata/automaton.py">
+        <entry file="file://$PROJECT_DIR$/Turing Morph/turing_morph.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+            <state relative-caret-position="65">
+              <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,6 +51,7 @@
         <option value="$PROJECT_DIR$/Sierpinski/SierpinskiTriangle.py" />
         <option value="$PROJECT_DIR$/LangPrediction/henon.py" />
         <option value="$PROJECT_DIR$/Cellular Automata/automaton.py" />
+        <option value="$PROJECT_DIR$/Turing Morph/turing_morph.py" />
       </list>
     </option>
   </component>
@@ -105,7 +109,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.automaton">
+  <component name="RunManager" selected="Python.turing_morph">
     <configuration name="automaton" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AL" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -169,8 +173,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="turing_morph" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AL" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Turing Morph" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Turing Morph/turing_morph.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.turing_morph" />
         <item itemvalue="Python.automaton" />
         <item itemvalue="Python.langPrediction" />
         <item itemvalue="Python.henon" />
@@ -226,7 +252,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.10288936" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.10288936" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.5003524" side_tool="true" weight="0.32891566" />
@@ -234,7 +260,7 @@
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.49964765" weight="0.32891566" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.51566267" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.036144577" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.3987952" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -371,8 +397,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Cellular Automata/automaton.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+        <state relative-caret-position="235">
+          <caret line="22" column="21" lean-forward="true" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Turing Morph/turing_morph.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
