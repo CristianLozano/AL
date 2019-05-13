@@ -907,7 +907,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 7368782541442974179, guid: a6eeae037c96116449581ff2f0a02db8,
     type: 3}
-  boidNumber: 100
+  boidNumber: 90
+  allBoids: []
+  swimLimits: {x: 250, y: 100, z: 300}
+  minSpeed: 0
+  maxSpeed: 0
 --- !u!4 &1644325370
 Transform:
   m_ObjectHideFlags: 0

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
+    public BoidController controller;
+    public float speed;
+    /*
     public Vector3 position, velocity, acceleration, alignment, cohesion, separation; // position, velocity, and acceleration in
                                                                                       // a vector datatype
     public float neighborhoodRadius; // radius in which it looks for fellow boids
@@ -12,19 +15,23 @@ public class Boid : MonoBehaviour
     public float sc; // scale factor for the render of the boid
     public float flap;
     public float t;
-
+    */
     // Start is called before the first frame update
     void Start()
     {
-        velocity = new Vector3((float)Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+        speed = Random.Range(controller.minSpeed,controller.maxSpeed);
+        /* velocity = new Vector3((float)Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
         acceleration = new Vector3(0, 0, 0);
-        neighborhoodRadius = 100f;
+        neighborhoodRadius = 100f;*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        t += .1;
+
+        transform.Translate(0,0, Time.deltaTime * speed);
+        ApplyRules();
+        /* t += .1;
         flap = 10 * sin(t);
         // acceleration.add(steer(new Vector(mouseX,mouseY,300),true));
         // acceleration.add(new Vector(0,.05,0));
@@ -39,7 +46,43 @@ public class Boid : MonoBehaviour
         }
         flock(bl);
         move();
-        checkBounds();
+        checkBounds();*/
+    }
+
+    void ApplyRules(){
+        GameObject[] gos;
+        gos = controller.allBoids;
+
+        Vector3 vcentre = Vector3.zero;
+        Vector3 vavoid = Vector3.zero;
+        float gSpeed = 0.01f;
+        float nDistance;
+        int groupSize = 0;
+
+        foreach (GameObject go in gos){
+            if( go != this.GameObject){
+                nDistance = Vector3.Distance(go.transform.position,this.transform.position);
+                if(nDistance <= controller.neighborDistance){
+                    vcentre += go.transform.position;
+                    groupSize++;
+
+                    if(nDistance < 1.0f){
+                        vavoid = vavoid + (this.transform.position - go.transform.position);
+                    }
+                    Boid anotherBoid = go.GetComponent<Boid>();
+                    gSpeed = gSpeed + anotherBoid.speed;
+                }
+            }
+        }
+        if(groupSize > 0)
+        {
+            vcentre = vcentre/groupSize;
+            speed = gSpeed/groupSize;
+            Vector3 direction = (vcentre + vavoid) - transform.position;
+            if(direction != Vector3.zero){
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), controller.rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 }
 
