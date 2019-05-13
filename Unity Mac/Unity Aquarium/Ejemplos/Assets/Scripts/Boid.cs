@@ -60,7 +60,7 @@ public class Boid : MonoBehaviour
         int groupSize = 0;
 
         foreach (GameObject go in gos){
-            if( go != this.GameObject){
+            if( go != this.gameObject){
                 nDistance = Vector3.Distance(go.transform.position,this.transform.position);
                 if(nDistance <= controller.neighborDistance){
                     vcentre += go.transform.position;
