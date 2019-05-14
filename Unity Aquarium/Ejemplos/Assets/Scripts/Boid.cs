@@ -19,6 +19,9 @@ public class Boid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get reference to controller before anything else
+        controller = GameObject.Find("BoidController").GetComponent<BoidController>();
+
         speed = Random.Range(controller.minSpeed,controller.maxSpeed);
         /* velocity = new Vector3((float)Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
         acceleration = new Vector3(0, 0, 0);
@@ -28,7 +31,6 @@ public class Boid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         transform.Translate(0,0, Time.deltaTime * speed);
         ApplyRules();
         /* t += .1;
@@ -50,7 +52,7 @@ public class Boid : MonoBehaviour
     }
 
     void ApplyRules(){
-        GameObject[] gos;
+        GameObject[] gos = new GameObject[]{};
         gos = controller.allBoids;
 
         Vector3 vcentre = Vector3.zero;

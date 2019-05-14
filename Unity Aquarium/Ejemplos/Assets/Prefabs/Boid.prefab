@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3248393829468544727}
   - component: {fileID: 67526498610951552}
   - component: {fileID: 4168528363743999773}
+  - component: {fileID: -3537645588465874444}
   m_Layer: 0
   m_Name: Boid
   m_TagString: Untagged
@@ -121,3 +122,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   speed: 3
+--- !u!54 &-3537645588465874444
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7368782541442974179}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

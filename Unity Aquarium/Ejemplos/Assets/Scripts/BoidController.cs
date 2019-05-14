@@ -37,10 +37,10 @@ public class BoidController : MonoBehaviour
             boid.transform.localPosition = new Vector3(x, y, z);
         }*/
         allBoids = new GameObject[boidNumber];
-        for(int i = 0; i < boidNumber; i++){
+        for(int i = 0; i < boidNumber; i++)
+        {
             Vector3 pos = this.transform.position + new Vector3(Random.Range(-swimLimits.x,swimLimits.x), Random.Range(0,swimLimits.y),Random.Range(0, swimLimits.z));
-            allBoids[i] = (GameObject) Instantiate(boidPrefab, pos, Quaternion.identity);
-            allBoids[i].GetComponent<Boid>().controller = this;
+            allBoids[i] = Instantiate(boidPrefab, pos, Quaternion.identity, transform);
         }
 
     }
