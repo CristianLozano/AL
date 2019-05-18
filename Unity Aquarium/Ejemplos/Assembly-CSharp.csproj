@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Boid.cs" />
     <Compile Include="Assets\Scripts\BoidController.cs" />
+    <Compile Include="Assets\Scripts\Predator.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Artificial Life Git/Unity Aquarium/Ejemplos/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

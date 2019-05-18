@@ -1,53 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class BoidController : MonoBehaviour
 {
-    // Variables
     public GameObject boidPrefab;
-    public int boidNumber = 50;
-    public GameObject[] allBoids;
-    public Vector3 swimLimits = new Vector3(300,100,500);
 
-    [Header("boid Settings")]
-    [Range(0.0f, 5.0f)]
-    public float minSpeed;
-    [Range(0.0f, 5.0f)]
-    public float maxSpeed;
-    Vector3 pos;
-    [Range(1.0f, 10.0f)]
-    public float neighborDistance;
-    [Range(0.0f, 5.0f)]
-    public float rotationSpeed;
+    public int spawnCount = 10;
 
-    // Start is called before the first frame update
+    public Vector3 swimLimits = new Vector3(300, 100, 500);
+
+    public LayerMask searchLayer;
+
     void Start()
     {
-        /*for (int i = 0; i < boidNumber; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            GameObject boid = Instantiate(boidPrefab, transform);
-
-            float x, y, z;
-
-            x = Random.Range(0, 50f);
-            y = Random.Range(0, 50f);
-            z = Random.Range(0, 50f);
-
-            boid.transform.localPosition = new Vector3(x, y, z);
-        }*/
-        allBoids = new GameObject[boidNumber];
-        for(int i = 0; i < boidNumber; i++)
-        {
-            Vector3 pos = this.transform.position + new Vector3(Random.Range(-swimLimits.x,swimLimits.x), Random.Range(0,swimLimits.y),Random.Range(0, swimLimits.z));
-            allBoids[i] = Instantiate(boidPrefab, pos, Quaternion.identity, transform);
-        }
-
+            Spawn();
+        } 
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject Spawn()
     {
+        Vector3 pos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x), Random.Range(0, swimLimits.y), Random.Range(0, swimLimits.z));
+        return Spawn(pos);
+    }
 
+    public GameObject Spawn(Vector3 position)
+    {
+        Quaternion rotation = Quaternion.Slerp(transform.rotation, Random.rotation, 0.3f);
+        GameObject boid = Instantiate(boidPrefab, position, rotation, transform);
+        return boid;
     }
 }
