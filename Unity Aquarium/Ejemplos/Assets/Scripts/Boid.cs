@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Boid : MonoBehaviour
 {
@@ -20,18 +21,23 @@ public class Boid : MonoBehaviour
 
     public float maxSize = 10f;
 
-    public int age;
-    public int energy;
+    public float age;
+    public float energy, reproductiveEnergy;
+    public float waitTime;
     public bool alive = false;
 
     private float size = 3f;
     private float growthRate = 0.0001f;
-    private int deathAge;
-    private float deathTime;
-
+    private float deathAge;
+    private float deathTime, lifeTime, ageTime;
+    private float adultAge = 4f;
 
     // Random seed.
     private float noiseOffset;
+
+    private bool reproduce = false;
+
+    private Transform closestBoid;
 
     // Caluculates the separation vector with a target.
     Vector3 GetSeparationVector(Transform target)
@@ -46,86 +52,168 @@ public class Boid : MonoBehaviour
     {
         controller = GameObject.Find("BoidController").GetComponent<BoidController>();
         alive = true;
-        deathAge = Random.Range(2000, 10000);
+        deathAge = Random.Range(8f, 13f);
         noiseOffset = Random.value * 10.0f;
+        lifeTime = Time.time;
     }
 
     void Update()
     {
         if (alive)
         {
-            Vector3 currentPosition = transform.position;
-            Quaternion currentRotation = transform.rotation;
-
-            // Current velocity randomized with noise.
-            float noise = Mathf.PerlinNoise(Time.time, noiseOffset) * 2.0f - 1.0f;
-            float boidVelocity = velocity * (1.0f + noise * velocityVariation);
-
-            // Initializes the vectors.
-            Vector3 separation = Vector3.zero;
-            Vector3 alignment = controller.transform.forward;
-            Vector3 cohesion = controller.transform.position;
-
-            // Looks up nearby boids.
-            Collider[] nearbyBoids = Physics.OverlapSphere(currentPosition, neighborDist, controller.searchLayer);
-
-            // Accumulates the vectors.
-            foreach (Collider boid in nearbyBoids)
+            if(energy >= reproductiveEnergy && age >= adultAge)
             {
-                if (boid.gameObject.GetComponent<Boid>().alive == false) continue;
-                if (boid.gameObject == gameObject) continue;
-
-                Transform t = boid.transform;
-                separation += GetSeparationVector(t);
-                alignment += t.forward;
-                cohesion += t.position;
-            }
-
-            float avg = 1.0f / nearbyBoids.Length;
-            alignment *= avg;
-            cohesion *= avg;
-            cohesion = (cohesion - currentPosition).normalized;
-
-            // Calculates a rotation from the vectors.
-            Vector3 direction = separation + alignment + cohesion;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
-
-            // Applys the rotation with interpolation.
-            if (rotation != currentRotation)
-            {
-                float ip = Mathf.Exp(-rotationCoeff * Time.deltaTime);
-                transform.rotation = Quaternion.Slerp(rotation, currentRotation, ip);
-            }
-
-            // Moves forawrd.
-            transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
-
-            // Control size of the boid
-            size += growthRate;
-
-            if (size >= maxSize)
-            {
-                size = maxSize;
+                reproduce = true;
             }
             else
             {
-                transform.localScale = Vector3.one * size;
+                reproduce = false;
+            }
+
+            // Flocking behaviour
+            if(!reproduce)
+            {
+                FlockMovement();
+            }
+            else
+            {
+                if(closestBoid == null)
+                {
+                    // Looks up nearby boids.
+                    Collider[] nearbyBoids = Physics.OverlapSphere(transform.position, neighborDist, controller.searchLayer);
+                    List<Collider> couples = new List<Collider>(nearbyBoids);
+
+                    if(couples.Count == 1)
+                    {
+                        FlockMovement();
+                        return;
+                    }
+
+                    float minDistance = float.PositiveInfinity;
+
+                    foreach (Collider boid in nearbyBoids)
+                    {
+                        if (boid.gameObject.GetComponent<Boid>().alive == false) continue;
+                        if (boid.gameObject == gameObject) continue;
+
+                        Transform t = boid.transform;
+                        float distance = Vector3.Distance(transform.localPosition, t.localPosition);
+
+                        if(distance < minDistance)
+                        {
+                            minDistance = distance;
+                            closestBoid = t;
+                        }
+                    }
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, closestBoid.position, velocity * Time.deltaTime);
+                }
             }
 
             // Increase age of the boid
-            age++;
+            IncreaseAge();
 
             if (age >= deathAge)
+            {
+                KillBoid();
+            }
+
+            LoseEnergy();
+
+            if(energy <= 0)
             {
                 KillBoid();
             }
         }
         else
         {
-            if ((Time.time - deathTime) >= 60f)
+            if ((Time.time - deathTime) >= 30f)
             {
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void FlockMovement()
+    {
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+
+        // Current velocity randomized with noise.
+        float noise = Mathf.PerlinNoise(Time.time, noiseOffset) * 2.0f - 1.0f;
+        float boidVelocity = velocity * (1.0f + noise * velocityVariation);
+
+        // Initializes the vectors.
+        Vector3 separation = Vector3.zero;
+        Vector3 alignment = controller.transform.forward;
+        Vector3 cohesion = controller.transform.position;
+
+        // Looks up nearby boids.
+        Collider[] nearbyBoids = Physics.OverlapSphere(currentPosition, neighborDist, controller.searchLayer);
+
+        // Accumulates the vectors.
+        foreach (Collider boid in nearbyBoids)
+        {
+            if (boid.gameObject.GetComponent<Boid>().alive == false) continue;
+            if (boid.gameObject == gameObject) continue;
+
+            Transform t = boid.transform;
+            separation += GetSeparationVector(t);
+            alignment += t.forward;
+            cohesion += t.position;
+        }
+
+        float avg = 1.0f / nearbyBoids.Length;
+        alignment *= avg;
+        cohesion *= avg;
+        cohesion = (cohesion - currentPosition).normalized;
+
+        // Calculates a rotation from the vectors.
+        Vector3 direction = separation + alignment + cohesion;
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, direction.normalized);
+
+        // Applys the rotation with interpolation.
+        if (rotation != currentRotation)
+        {
+            float ip = Mathf.Exp(-rotationCoeff * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(rotation, currentRotation, ip);
+        }
+
+        // Moves forawrd.
+        transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
+
+        // Control size of the boid
+        size += growthRate;
+
+        if (size >= maxSize)
+        {
+            size = maxSize;
+        }
+        else
+        {
+            transform.localScale = Vector3.one * size;
+        }
+    }
+
+    private void IncreaseAge()
+    {
+        if(Time.time - ageTime >= 2f)
+        {
+            age += 0.1f;
+            ageTime = Time.time;
+        }
+    }
+    private void LoseEnergy()
+    {
+        if(Time.time - lifeTime >= waitTime)
+        {
+            float volume = transform.localScale.x * transform.localScale.y + transform.localScale.z;
+
+            energy -= volume;
+            energy -= velocity;
+            lifeTime = Time.time;
         }
     }
 
@@ -141,4 +229,38 @@ public class Boid : MonoBehaviour
         gameObject.layer = 10;
         GetComponent<Rigidbody>().useGravity = true;
     }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(reproduce)
+        {
+            if(col.transform == closestBoid)
+            {
+                GameObject child = Instantiate(gameObject, transform.localPosition, Quaternion.identity, controller.transform);
+                energy -= 5000;
+                reproduce = false;
+                Boid parentTraits = closestBoid.GetComponent<Boid>();
+                Boid childTraits = child.GetComponent<Boid>();
+
+                childTraits.velocity = (parentTraits.velocity + velocity)/2f + Random.Range(-0.1f, 0.1f);
+                childTraits.neighborDist = (parentTraits.neighborDist + neighborDist)/2f + Random.Range(-0.1f, 0.1f);
+                childTraits.maxSize = (parentTraits.maxSize + maxSize)/2f + Random.Range(-0.1f, 0.1f);
+                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy)/2f + Random.Range(-0.1f, 0.1f);
+                childTraits.energy = 10000 + Random.Range(-100f, 100f);
+                childTraits.age = 0f;
+
+                float r,g,b = 0f;
+                r = Random.Range(0f, 1f);
+                g = Random.Range(0f, 1f);
+                b = Random.Range(0f, 1f);
+                child.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(r, g, b);
+
+                child.transform.localPosition = transform.localPosition;
+
+                closestBoid = null;
+            }
+        }
+    }
+
+
 }

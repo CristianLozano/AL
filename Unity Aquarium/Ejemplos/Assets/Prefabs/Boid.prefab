@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 7368782541442974179}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 69040679}
   m_Father: {fileID: 0}
@@ -130,7 +130,9 @@ MonoBehaviour:
   neighborDist: 5
   maxSize: 10
   age: 0
-  energy: 0
+  energy: 10000
+  reproductiveEnergy: 5000
+  waitTime: 1
   alive: 1
 --- !u!54 &-3537645588465874444
 Rigidbody:
@@ -141,8 +143,8 @@ Rigidbody:
   m_GameObject: {fileID: 7368782541442974179}
   serializedVersion: 2
   m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -155,7 +157,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7368782541442974179}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 478784b1501a8ae43aaa9a5295995f53, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.18

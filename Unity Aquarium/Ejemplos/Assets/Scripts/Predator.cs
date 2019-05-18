@@ -8,6 +8,8 @@ public class Predator : MonoBehaviour
     public float speed = 4f;
     public float maxAngle;
     public float maxRadius;
+    [Range(0f, 10f)]
+    public float rotationAngle;
     public LayerMask preyLayer;
 
     private bool isInFov = false;
@@ -91,6 +93,24 @@ public class Predator : MonoBehaviour
 
         return false;
     }
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.tag == "Wall")
+        {
+            Vector3 rot = transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x,rot.y+180,rot.z);
+            transform.rotation = Quaternion.Euler(rot);
+            transform.position += transform.forward * 10;
+        }
+
+        if(col.gameObject.tag == "Floor")
+        {
+            Vector3 rot = transform.rotation.eulerAngles;
+            rot = new Vector3(rot.x+180,rot.y,rot.z+180);
+            transform.rotation = Quaternion.Euler(rot);
+            transform.position += transform.forward * 10;
+        }
+    }
 
     private void Update()
     {
@@ -99,11 +119,12 @@ public class Predator : MonoBehaviour
         if (isInFov)
         {
             Vector3 newDir = Vector3.RotateTowards(transform.forward, target.transform.position, speed * Time.deltaTime, 0.0f);
-            transform.rotation = Quaternion.LookRotation(newDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target.transform.rotation, speed * Time.deltaTime);
+            //transform.rotation = Quaternion.LookRotation(newDir);
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
 
             // Check if the position of the predator and prey are approximately equal.
-            if (Vector3.Distance(transform.position, target.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, target.transform.position) < 3f)
             {
                 Debug.Log("Ate prey");
                 Animation animator = transform.GetChild(0).GetComponent<Animation>();
@@ -117,7 +138,12 @@ public class Predator : MonoBehaviour
         }
         else
         {
-            // Moves forawrd.
+            // Moves forward.
+            float x,y,z = 0f;
+            x = Random.Range(-rotationAngle, rotationAngle);
+            y = Random.Range(-rotationAngle, rotationAngle);
+            z = Random.Range(-rotationAngle, rotationAngle);
+            transform.Rotate(new Vector3(x,y,z) * Time.deltaTime*speed);
             transform.position += transform.forward * (speed * Time.deltaTime);
         }
     }
