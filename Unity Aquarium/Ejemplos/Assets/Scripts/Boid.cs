@@ -21,6 +21,8 @@ public class Boid : MonoBehaviour
 
     public float maxSize = 10f;
 
+    public Vector3 initialSize;
+
     public float age;
     public float energy, reproductiveEnergy;
     public float waitTime;
@@ -31,6 +33,7 @@ public class Boid : MonoBehaviour
     private float deathAge;
     private float deathTime, lifeTime, ageTime;
     private float adultAge = 4f;
+    
 
     // Random seed.
     private float noiseOffset;
@@ -55,6 +58,7 @@ public class Boid : MonoBehaviour
         deathAge = Random.Range(8f, 13f);
         noiseOffset = Random.value * 10.0f;
         lifeTime = Time.time;
+        initialSize = transform.localScale;
     }
 
     void Update()
@@ -193,7 +197,7 @@ public class Boid : MonoBehaviour
         }
         else
         {
-            transform.localScale = Vector3.one * size;
+            transform.localScale += Vector3.one * growthRate;
         }
     }
 
@@ -249,11 +253,21 @@ public class Boid : MonoBehaviour
                 childTraits.energy = 10000 + Random.Range(-100f, 100f);
                 childTraits.age = 0f;
 
+                // Color Mutation
+                Color parent1Color = closestBoid.GetChild(0).GetComponent<Renderer>().material.color;
+                Color parent2Color = transform.GetChild(0).GetComponent<Renderer>().material.color;
                 float r,g,b = 0f;
-                r = Random.Range(0f, 1f);
-                g = Random.Range(0f, 1f);
-                b = Random.Range(0f, 1f);
+                r = (parent1Color.r + parent2Color.r)/2f + Random.Range(-0.1f, 0.1f);
+                g = (parent1Color.g + parent2Color.g) / 2f + Random.Range(-0.1f, 0.1f);
+                b = (parent1Color.b + parent2Color.b) / 2f + Random.Range(-0.1f, 0.1f);
                 child.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(r, g, b);
+
+                // Size mutation
+                float x, y, z = 0f;
+                x = (parentTraits.initialSize.x + initialSize.x) / 2f + Random.Range(-0.1f, 0.1f);
+                y = (parentTraits.initialSize.y + initialSize.y) / 2f + Random.Range(-0.1f, 0.1f);
+                z = (parentTraits.initialSize.z + initialSize.z) / 2f + Random.Range(-0.1f, 0.1f);
+                child.transform.localScale = childTraits.initialSize = new Vector3(x, y, z);
 
                 child.transform.localPosition = transform.localPosition;
 
@@ -261,6 +275,4 @@ public class Boid : MonoBehaviour
             }
         }
     }
-
-
 }

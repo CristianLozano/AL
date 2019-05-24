@@ -160,7 +160,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 354894995}
-  m_Material: {fileID: 13400000, guid: f6c7d06d3d9f43c44b014d509c6fef30, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -287,7 +287,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588165336}
-  m_Material: {fileID: 13400000, guid: f6c7d06d3d9f43c44b014d509c6fef30, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 748775693}
   m_Layer: 0
   m_Name: Ceilling
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -560,7 +560,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802003109}
-  m_Material: {fileID: 13400000, guid: f6c7d06d3d9f43c44b014d509c6fef30, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -651,7 +651,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832695909}
-  m_Material: {fileID: 13400000, guid: f6c7d06d3d9f43c44b014d509c6fef30, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -768,12 +768,12 @@ PrefabInstance:
     - target: {fileID: 2728940201181129412, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 49.5
       objectReference: {fileID: 0}
     - target: {fileID: 2728940201181129412, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 49.3
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2728940201181129412, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
@@ -828,7 +828,7 @@ PrefabInstance:
     - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: speed
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
@@ -838,12 +838,37 @@ PrefabInstance:
     - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: rotationAngle
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: maxRadius
-      value: 30
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
+        type: 3}
+      propertyPath: velocidadMax
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
+        type: 3}
+      propertyPath: xMax
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
+        type: 3}
+      propertyPath: zMax
+      value: 129
+      objectReference: {fileID: 0}
+    - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
+        type: 3}
+      propertyPath: xMin
+      value: -105
+      objectReference: {fileID: 0}
+    - target: {fileID: 967732536753661681, guid: 54516ece9a6949b429a14d61ef5edea5,
+        type: 3}
+      propertyPath: zMin
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4203301646635928467, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
@@ -1190,7 +1215,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540548253}
-  m_Material: {fileID: 13400000, guid: f6c7d06d3d9f43c44b014d509c6fef30, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

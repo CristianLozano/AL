@@ -14,6 +14,7 @@ public class Predator : MonoBehaviour
 
     private bool isInFov = false;
     private Collider target;
+    private float lastRotation;
 
     private void OnDrawGizmos()
     {
@@ -36,6 +37,11 @@ public class Predator : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * maxRadius);
+    }
+
+    private void Start()
+    {
+        lastRotation = Time.time;
     }
 
     public bool inFOV(Transform checkingObject, float maxAngle, float maxRadius)
@@ -93,24 +99,6 @@ public class Predator : MonoBehaviour
 
         return false;
     }
-    void OnCollisionEnter(Collision col)
-    {
-        if(col.gameObject.tag == "Wall")
-        {
-            Vector3 rot = transform.rotation.eulerAngles;
-            rot = new Vector3(rot.x,rot.y+180,rot.z);
-            transform.rotation = Quaternion.Euler(rot);
-            transform.position += transform.forward * 10;
-        }
-
-        if(col.gameObject.tag == "Floor")
-        {
-            Vector3 rot = transform.rotation.eulerAngles;
-            rot = new Vector3(rot.x+180,rot.y,rot.z+180);
-            transform.rotation = Quaternion.Euler(rot);
-            transform.position += transform.forward * 10;
-        }
-    }
 
     private void Update()
     {
@@ -119,8 +107,9 @@ public class Predator : MonoBehaviour
         if (isInFov)
         {
             Vector3 newDir = Vector3.RotateTowards(transform.forward, target.transform.position, speed * Time.deltaTime, 0.0f);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target.transform.rotation, speed * Time.deltaTime);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, target.transform.rotation, speed * Time.deltaTime);
             //transform.rotation = Quaternion.LookRotation(newDir);
+            transform.LookAt(target.transform);
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
 
             // Check if the position of the predator and prey are approximately equal.
@@ -138,13 +127,36 @@ public class Predator : MonoBehaviour
         }
         else
         {
+            if (Time.time - lastRotation >= 10f)
+            {
+                float x, y, z = 0f;
+                x = Random.Range(-rotationAngle, rotationAngle);
+                y = Random.Range(-rotationAngle, rotationAngle);
+                z = Random.Range(-rotationAngle, rotationAngle);
+                transform.Rotate(new Vector3(x, y, z));
+                lastRotation = Time.time;
+            }
+
+            if (transform.localRotation.z >= 20f || transform.localRotation.z <= -20f)
+            {
+                transform.localRotation = new Quaternion(transform.localRotation.x, transform.localRotation.y, 0f, 0);
+            }
+
             // Moves forward.
-            float x,y,z = 0f;
-            x = Random.Range(-rotationAngle, rotationAngle);
-            y = Random.Range(-rotationAngle, rotationAngle);
-            z = Random.Range(-rotationAngle, rotationAngle);
-            transform.Rotate(new Vector3(x,y,z) * Time.deltaTime*speed);
             transform.position += transform.forward * (speed * Time.deltaTime);
+
+            // Check to don't collider with walls
+            Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, maxRadius))
+            {
+                if (hit.transform.tag == "Wall")
+                {
+                    Quaternion lookQuaternion = transform.rotation * Quaternion.AngleAxis(180, Vector3.up);
+                    transform.rotation = lookQuaternion;
+                }
+            }
         }
     }
 }
