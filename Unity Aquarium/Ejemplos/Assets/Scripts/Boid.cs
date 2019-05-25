@@ -25,14 +25,18 @@ public class Boid : MonoBehaviour
 
     public float age;
     public float energy, reproductiveEnergy;
-    public float waitTime;
+    public float waitTime, cooldownTime;
     public bool alive = false;
+
+    public LayerMask plantLayer;
 
     private float size = 3f;
     private float growthRate = 0.0001f;
     private float deathAge;
-    private float deathTime, lifeTime, ageTime;
-    private float adultAge = 4f;
+    private float deathTime, lifeTime, ageTime, lastReproductionMoment;
+    private float adultAge = 3f, oldAge = 7f;
+    private int currentSkin = 0;
+    private Collider target;
     
 
     // Random seed.
@@ -41,6 +45,8 @@ public class Boid : MonoBehaviour
     private bool reproduce = false;
 
     private Transform closestBoid;
+
+    private bool changedAdult = false, changedOld = false;
 
     // Caluculates the separation vector with a target.
     Vector3 GetSeparationVector(Transform target)
@@ -55,17 +61,20 @@ public class Boid : MonoBehaviour
     {
         controller = GameObject.Find("BoidController").GetComponent<BoidController>();
         alive = true;
-        deathAge = Random.Range(8f, 13f);
+        deathAge = Random.Range(10f, 15f);
         noiseOffset = Random.value * 10.0f;
         lifeTime = Time.time;
         initialSize = transform.localScale;
+
+        currentSkin  = UnityEngine.Random.Range(0, controller.youngPreySkins.Count);
+        transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = controller.youngPreySkins[currentSkin];
     }
 
     void Update()
     {
         if (alive)
         {
-            if(energy >= reproductiveEnergy && age >= adultAge)
+            if(energy >= reproductiveEnergy && age >= adultAge  && Time.time - lastReproductionMoment > cooldownTime)
             {
                 reproduce = true;
             }
@@ -77,7 +86,14 @@ public class Boid : MonoBehaviour
             // Flocking behaviour
             if(!reproduce)
             {
-                FlockMovement();
+                if(energy > reproductiveEnergy)
+                {
+                    FlockMovement();
+                }
+                else
+                {
+                    SearchFood(transform, neighborDist * 3);
+                }
             }
             else
             {
@@ -201,12 +217,74 @@ public class Boid : MonoBehaviour
         }
     }
 
+     public void SearchFood(Transform checkingObject, float maxRadius)
+    {
+        // Search only for plants
+        Collider[] overlaps = Physics.OverlapSphere(checkingObject.position, maxRadius, plantLayer);
+        List<Collider> foundPlant = new List<Collider>(overlaps);
+
+        // Follow the same plant if still in sight
+        if (foundPlant.Contains(target))
+        {
+            transform.LookAt(target.transform);
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, velocity * Time.deltaTime);
+            return;
+        }
+
+        float closestDistance = float.PositiveInfinity;
+        int counter = 0;
+        int chosenPlant = 0;
+        
+        foreach (Collider plant in foundPlant)
+        {
+            if (plant != null)
+            {
+                float distance = Vector3.Distance(transform.position, plant.transform.position);
+
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    chosenPlant = counter;
+                }
+                
+                counter++;
+            }
+        }
+
+        if(foundPlant.Count == 0)
+        {
+            FlockMovement();
+            return;
+        }
+
+        target = foundPlant[chosenPlant];
+
+        if(target == null)
+        {
+            FlockMovement();
+            return;
+        }
+    }
+
     private void IncreaseAge()
     {
         if(Time.time - ageTime >= 2f)
         {
             age += 0.1f;
             ageTime = Time.time;
+        }
+
+        if(age >= adultAge && age < oldAge && !changedAdult)
+        {
+            currentSkin  = UnityEngine.Random.Range(0, controller.adultPreySkins.Count);
+            transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = controller.adultPreySkins[currentSkin];
+            changedAdult = true;
+        }
+        else if(age >= oldAge && !changedOld)
+        {
+            currentSkin  = UnityEngine.Random.Range(0, controller.oldPreySkins.Count);
+            transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = controller.oldPreySkins[currentSkin];
+            changedOld = true;
         }
     }
     private void LoseEnergy()
@@ -243,6 +321,7 @@ public class Boid : MonoBehaviour
                 GameObject child = Instantiate(gameObject, transform.localPosition, Quaternion.identity, controller.transform);
                 energy -= 5000;
                 reproduce = false;
+                lastReproductionMoment = Time.time;
                 Boid parentTraits = closestBoid.GetComponent<Boid>();
                 Boid childTraits = child.GetComponent<Boid>();
 

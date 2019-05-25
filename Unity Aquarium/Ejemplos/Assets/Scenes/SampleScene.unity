@@ -736,7 +736,7 @@ Transform:
   - {fileID: 832695910}
   - {fileID: 748775692}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &898835648
 PrefabInstance:
@@ -798,7 +798,7 @@ PrefabInstance:
     - target: {fileID: 2728940201181129412, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2728940201181129412, guid: 54516ece9a6949b429a14d61ef5edea5,
         type: 3}
@@ -1298,10 +1298,76 @@ MonoBehaviour:
   boidPrefab: {fileID: 7368782541442974179, guid: a6eeae037c96116449581ff2f0a02db8,
     type: 3}
   spawnCount: 100
-  swimLimits: {x: 120, y: 10, z: 62.5}
+  swimLimits: {x: 120, y: 15, z: 60}
   searchLayer:
     serializedVersion: 2
     m_Bits: 256
+  youngPreySkins:
+  - {fileID: 2800000, guid: 3af5a3459852ec249bd60fc5c31ea313, type: 3}
+  - {fileID: 2800000, guid: e85e52377264ae344a988f2b5a7e35ff, type: 3}
+  - {fileID: 2800000, guid: 026d677062b57ce4897d07ace9db4ce9, type: 3}
+  - {fileID: 2800000, guid: 1097560cf7d72f7468ad9830a024f395, type: 3}
+  - {fileID: 2800000, guid: a94283f69e6f45f4fafa343a685a98ef, type: 3}
+  - {fileID: 2800000, guid: c10b6f07c41e12342b845372c87d605e, type: 3}
+  - {fileID: 2800000, guid: 64a5f44b9bfd04448a137ea044e3c7e9, type: 3}
+  - {fileID: 2800000, guid: 97b2201d13a55fe458a46a50568e9d0f, type: 3}
+  - {fileID: 2800000, guid: 3876d286a646d04448546b9a7a01be17, type: 3}
+  - {fileID: 2800000, guid: a480dfaa01dbb3e4fbd0d5f11f029242, type: 3}
+  adultPreySkins:
+  - {fileID: 2800000, guid: dc9654a9d962f914089c20f8afd6c77b, type: 3}
+  - {fileID: 2800000, guid: e4f583a95c66c4a4086936a127e6add2, type: 3}
+  - {fileID: 2800000, guid: 5f394a400fd3b8c4a92d6de703c3954f, type: 3}
+  - {fileID: 2800000, guid: 1242baf1ce50d8b44bf60074aafaaeef, type: 3}
+  - {fileID: 2800000, guid: ad403d75b72808449831e20291829183, type: 3}
+  - {fileID: 2800000, guid: 3b41173e4825cc04388b861b5300e10d, type: 3}
+  - {fileID: 2800000, guid: 49c1ff5ca670c554e87a69b346df0840, type: 3}
+  - {fileID: 2800000, guid: 8ef0b667f93d42d4b80a15b7c2de37c3, type: 3}
+  - {fileID: 2800000, guid: 6c8eb33a42a4ad740bd87871def68a2f, type: 3}
+  - {fileID: 2800000, guid: db28d716f1a11bf4da30dba3e7cd7f98, type: 3}
+  oldPreySkins:
+  - {fileID: 2800000, guid: 37a8172f2c9f18f43a394abfee0cd812, type: 3}
+  - {fileID: 2800000, guid: cf5b233a3f8bdd2489c2f1c2371c41b7, type: 3}
+  - {fileID: 2800000, guid: 16a61b761b05b744f9b4ed9eb4c2ca4b, type: 3}
+  - {fileID: 2800000, guid: 7f33e4610d4fe5b44845afd16220920d, type: 3}
+  - {fileID: 2800000, guid: c0231a6350e0e8f4092cdc0e246ced81, type: 3}
+  - {fileID: 2800000, guid: 65ff8e808ded897419f8220128c7d881, type: 3}
+  - {fileID: 2800000, guid: 8ddf26643a5b8744c9f31aebc1c1b34a, type: 3}
+  - {fileID: 2800000, guid: e77706b8ea1dd8748b342cfaadff01f3, type: 3}
+  - {fileID: 2800000, guid: 90aed543c46fdcc49808a4cc5743d9cb, type: 3}
+  - {fileID: 2800000, guid: 8b9cafd40b10b384eb21a8a104778678, type: 3}
+  youngPredatorSkins:
+  - {fileID: 2800000, guid: 2a68c6882a34b1d4e807fd1d3139856c, type: 3}
+  - {fileID: 2800000, guid: 42e70189dfd224a4f8c8691f4ed6bd2f, type: 3}
+  - {fileID: 2800000, guid: 599effdfff35d644ebbeda96aeddec56, type: 3}
+  - {fileID: 2800000, guid: e1a1f4d39982f094da7255eb2877329b, type: 3}
+  - {fileID: 2800000, guid: 658badab90df2214687eed45f3a84f5b, type: 3}
+  - {fileID: 2800000, guid: 73b9f8979de79e34e86b940fd095b1d9, type: 3}
+  - {fileID: 2800000, guid: dbf9a0bf8d22eb04ca58c20795f1f19e, type: 3}
+  - {fileID: 2800000, guid: 53a39be667c151d4580f255cac02d73d, type: 3}
+  - {fileID: 2800000, guid: 1f6601c1def82134db5cefee3ca9e999, type: 3}
+  - {fileID: 2800000, guid: 02ef8e80cb7769c40acbc6db69adfbfd, type: 3}
+  adultPredatorSkins:
+  - {fileID: 2800000, guid: f5628fccb85dcd94ba45aa48e7d794dd, type: 3}
+  - {fileID: 2800000, guid: 740dd4a670579f34ea6143ea4b9f8f13, type: 3}
+  - {fileID: 2800000, guid: 3a53289ffd3e5a345b97cd3ae6e891bd, type: 3}
+  - {fileID: 2800000, guid: 5bb98e3a8536d0449b45aaa452f4b813, type: 3}
+  - {fileID: 2800000, guid: 2044fa1f2514b694691b7aa032394c6f, type: 3}
+  - {fileID: 2800000, guid: 5d019b655664ae44abf767a1c58d2def, type: 3}
+  - {fileID: 2800000, guid: e4507876eb81b9142ad2ed2f9b3342e3, type: 3}
+  - {fileID: 2800000, guid: 281a15f81312eee4ba304f2afb59fa6e, type: 3}
+  - {fileID: 2800000, guid: 62021acb235c12f41bfe450fddee33f6, type: 3}
+  - {fileID: 2800000, guid: 736eec290ecd36c4e93d8bc6b93b57e8, type: 3}
+  oldPredatorSkins:
+  - {fileID: 2800000, guid: 645240695b58b59409158aa35d6559ff, type: 3}
+  - {fileID: 2800000, guid: e70846eff61a8c94099670292a3523e2, type: 3}
+  - {fileID: 2800000, guid: df6850d5b8cc3dd4ab3b796b8226be56, type: 3}
+  - {fileID: 2800000, guid: 9c061d9d219cfc34389698e0dec36929, type: 3}
+  - {fileID: 2800000, guid: 69b41fb189233a142a372dec9b40843f, type: 3}
+  - {fileID: 2800000, guid: 54e06f2bb5832d34bb36ce162d200407, type: 3}
+  - {fileID: 2800000, guid: 87687ffd23c8d5641b182c850d80a438, type: 3}
+  - {fileID: 2800000, guid: 84a9396d533770b488deb7b2625f48a4, type: 3}
+  - {fileID: 2800000, guid: f2f1b7bd3f4592740837c4a4acb8a9ed, type: 3}
+  - {fileID: 2800000, guid: 1bc3f97ed4eb22b4f969fb6a93a0ecc5, type: 3}
 --- !u!4 &1644325370
 Transform:
   m_ObjectHideFlags: 0
@@ -1316,3 +1382,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1857891032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857891033}
+  - component: {fileID: 1857891034}
+  m_Layer: 0
+  m_Name: PlantsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857891033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857891032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 30, z: 75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1857891034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857891032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779a0d902b94f4e49b5b06b3e1dd2064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lSystemPrefab: {fileID: 4945549101323463896, guid: 29684650f7d494244971f37c09cb6102,
+    type: 3}
+  spawnCount: 30
+  environmentLimits: {x: 120, y: 0, z: 62.5}
