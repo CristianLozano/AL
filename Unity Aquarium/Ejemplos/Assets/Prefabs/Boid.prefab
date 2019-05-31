@@ -131,7 +131,7 @@ MonoBehaviour:
   maxSize: 10
   initialSize: {x: 0, y: 0, z: 0}
   age: 0
-  energy: 4999
+  energy: 10000
   reproductiveEnergy: 5000
   waitTime: 1
   cooldownTime: 30
@@ -139,6 +139,7 @@ MonoBehaviour:
   plantLayer:
     serializedVersion: 2
     m_Bits: 2048
+  target: {fileID: 0}
 --- !u!54 &-3537645588465874444
 Rigidbody:
   m_ObjectHideFlags: 0

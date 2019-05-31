@@ -36,7 +36,7 @@ public class Boid : MonoBehaviour
     private float deathTime, lifeTime, ageTime, lastReproductionMoment;
     private float adultAge = 3f, oldAge = 7f;
     private int currentSkin = 0;
-    private Collider target;
+    public Collider target;
     
 
     // Random seed.
@@ -60,6 +60,7 @@ public class Boid : MonoBehaviour
     void Start()
     {
         controller = GameObject.Find("BoidController").GetComponent<BoidController>();
+        //controller = transform.parent.GetComponent<BoidController>();
         alive = true;
         deathAge = Random.Range(10f, 15f);
         noiseOffset = Random.value * 10.0f;
@@ -74,7 +75,19 @@ public class Boid : MonoBehaviour
     {
         if (alive)
         {
-            if(energy >= reproductiveEnergy && age >= adultAge  && Time.time - lastReproductionMoment > cooldownTime)
+            // Control size of the boid
+            size += growthRate;
+
+            if (size >= maxSize)
+            {
+                size = maxSize;
+            }
+            else
+            {
+                transform.localScale += Vector3.one * growthRate;
+            }
+
+            if (energy >= reproductiveEnergy && age >= adultAge  && Time.time - lastReproductionMoment > cooldownTime)
             {
                 reproduce = true;
             }
@@ -92,7 +105,7 @@ public class Boid : MonoBehaviour
                 }
                 else
                 {
-                    SearchFood(transform, neighborDist * 3);
+                    SearchFood(transform, neighborDist * 10);
                 }
             }
             else
@@ -203,25 +216,21 @@ public class Boid : MonoBehaviour
 
         // Moves forawrd.
         transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
-
-        // Control size of the boid
-        size += growthRate;
-
-        if (size >= maxSize)
-        {
-            size = maxSize;
-        }
-        else
-        {
-            transform.localScale += Vector3.one * growthRate;
-        }
     }
 
-     public void SearchFood(Transform checkingObject, float maxRadius)
+    public void SearchFood(Transform checkingObject, float maxRadius)
     {
         // Search only for plants
         Collider[] overlaps = Physics.OverlapSphere(checkingObject.position, maxRadius, plantLayer);
         List<Collider> foundPlant = new List<Collider>(overlaps);
+
+        if (target != null)
+        {
+            if (target.GetComponent<PlantEnergy>().currentEnergy == 0f)
+            {
+                target = null;
+            }
+        }
 
         // Follow the same plant if still in sight
         if (foundPlant.Contains(target))
@@ -233,7 +242,7 @@ public class Boid : MonoBehaviour
 
         float closestDistance = float.PositiveInfinity;
         int counter = 0;
-        int chosenPlant = 0;
+        int chosenPlant = -1;
         
         foreach (Collider plant in foundPlant)
         {
@@ -243,8 +252,11 @@ public class Boid : MonoBehaviour
 
                 if(distance < closestDistance)
                 {
-                    closestDistance = distance;
-                    chosenPlant = counter;
+                    if (plant.GetComponent<PlantEnergy>().currentEnergy > 0f)
+                    {
+                        closestDistance = distance;
+                        chosenPlant = counter;
+                    }
                 }
                 
                 counter++;
@@ -252,6 +264,12 @@ public class Boid : MonoBehaviour
         }
 
         if(foundPlant.Count == 0)
+        {
+            FlockMovement();
+            return;
+        }
+
+        if (chosenPlant == -1)
         {
             FlockMovement();
             return;
@@ -314,29 +332,32 @@ public class Boid : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(reproduce)
+        if (reproduce)
         {
-            if(col.transform == closestBoid)
+            if (col.transform == closestBoid)
             {
-                GameObject child = Instantiate(gameObject, transform.localPosition, Quaternion.identity, controller.transform);
-                energy -= 5000;
-                reproduce = false;
-                lastReproductionMoment = Time.time;
                 Boid parentTraits = closestBoid.GetComponent<Boid>();
+
+                GameObject child = Instantiate(gameObject, transform.localPosition + Vector3.one * 5, Quaternion.identity, controller.boidContainer);
+                energy -= 5000;
+                parentTraits.energy -= 5000;
+                parentTraits.reproduce = reproduce = false;
+                parentTraits.lastReproductionMoment = lastReproductionMoment = Time.time;
+
                 Boid childTraits = child.GetComponent<Boid>();
 
-                childTraits.velocity = (parentTraits.velocity + velocity)/2f + Random.Range(-0.1f, 0.1f);
-                childTraits.neighborDist = (parentTraits.neighborDist + neighborDist)/2f + Random.Range(-0.1f, 0.1f);
-                childTraits.maxSize = (parentTraits.maxSize + maxSize)/2f + Random.Range(-0.1f, 0.1f);
-                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy)/2f + Random.Range(-0.1f, 0.1f);
+                childTraits.velocity = (parentTraits.velocity + velocity) / 2f + Random.Range(-0.1f, 0.1f);
+                childTraits.neighborDist = (parentTraits.neighborDist + neighborDist) / 2f + Random.Range(-0.1f, 0.1f);
+                childTraits.maxSize = (parentTraits.maxSize + maxSize) / 2f + Random.Range(-0.1f, 0.1f);
+                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy) / 2f + Random.Range(-0.1f, 0.1f);
                 childTraits.energy = 10000 + Random.Range(-100f, 100f);
                 childTraits.age = 0f;
 
                 // Color Mutation
                 Color parent1Color = closestBoid.GetChild(0).GetComponent<Renderer>().material.color;
                 Color parent2Color = transform.GetChild(0).GetComponent<Renderer>().material.color;
-                float r,g,b = 0f;
-                r = (parent1Color.r + parent2Color.r)/2f + Random.Range(-0.1f, 0.1f);
+                float r, g, b = 0f;
+                r = (parent1Color.r + parent2Color.r) / 2f + Random.Range(-0.1f, 0.1f);
                 g = (parent1Color.g + parent2Color.g) / 2f + Random.Range(-0.1f, 0.1f);
                 b = (parent1Color.b + parent2Color.b) / 2f + Random.Range(-0.1f, 0.1f);
                 child.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(r, g, b);
@@ -350,8 +371,16 @@ public class Boid : MonoBehaviour
 
                 child.transform.localPosition = transform.localPosition;
 
+                parentTraits.reproduce = false;
                 closestBoid = null;
             }
+        }
+        else if (col.collider == target)
+        {
+            energy += target.GetComponent<PlantEnergy>().currentEnergy;
+            target.GetComponent<PlantEnergy>().currentEnergy = 0f;
+            target.GetComponent<PlantEnergy>().ChangeColor();
+            target = null;
         }
     }
 }

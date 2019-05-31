@@ -10,6 +10,8 @@ public class BoidController : MonoBehaviour
 
     public Vector3 swimLimits = new Vector3(300, 100, 500);
 
+    public Transform boidContainer;
+
     public LayerMask searchLayer;
 
     public List<Texture> youngPreySkins;
@@ -37,7 +39,7 @@ public class BoidController : MonoBehaviour
     public GameObject Spawn(Vector3 position)
     {
         Quaternion rotation = Quaternion.Slerp(transform.rotation, UnityEngine.Random.rotation, 0.3f);
-        GameObject boid = Instantiate(boidPrefab, position, rotation, transform);
+        GameObject boid = Instantiate(boidPrefab, position, rotation, boidContainer);
         return boid;
     }
 }

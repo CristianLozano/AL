@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4945549101323463898}
   - component: {fileID: 4945549101323463897}
+  - component: {fileID: 2210628214178849389}
   - component: {fileID: 8747561145502825354}
   m_Layer: 11
   m_Name: LSystem
@@ -55,6 +56,18 @@ MonoBehaviour:
   openingAngle: 5
   segmentLength: 0.5
   nbSides: 18
+--- !u!114 &2210628214178849389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4945549101323463896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e1caebedc8a5746bf28e842ab88263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &8747561145502825354
 BoxCollider:
   m_ObjectHideFlags: 0
