@@ -16,7 +16,7 @@ public class Predator : MonoBehaviour
     private Collider target;
     private float lastRotation;
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, maxRadius);
@@ -37,7 +37,7 @@ public class Predator : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * maxRadius);
-    }
+    }*/
 
     private void Start()
     {

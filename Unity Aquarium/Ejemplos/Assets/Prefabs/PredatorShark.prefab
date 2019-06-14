@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2728940201181129412}
   - component: {fileID: 967732536753661681}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PredatorShark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   speed: 4
   maxAngle: 30
   maxRadius: 20
+  rotationAngle: 0
   preyLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -59,7 +60,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645460135453}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SharkJaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203301645469820061}
   - component: {fileID: 4203301645469820050}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Parent Sharkbody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645528303591}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SharkHead_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645580729925}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Leftfena2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645601082486}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rightfena2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645653788057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645821011514}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rightfena3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301645970863000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,7 +371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646002576848}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646275984044}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Leftfena1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +433,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646360160825}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SharkJaw_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646377297794}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail4_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646423640048}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Righhfena1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646429172913}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SharkHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,7 +555,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646435245628}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Leftfena3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,7 +585,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646600406937}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646635928467}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -649,7 +650,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646812328283}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharktail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203301646856178779}
   - component: {fileID: 4203301646856178789}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -731,7 +732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301646932178671}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rightfena3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -761,7 +762,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301647114313281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharkthroat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4203301647160306224}
   - component: {fileID: 4203301647160306225}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sharkjaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -887,7 +888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4203301647165806671}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Leftfena3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

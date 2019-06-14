@@ -54,7 +54,7 @@ MonoBehaviour:
   groundStartVariation: 0
   nSegments: 15
   openingAngle: 5
-  segmentLength: 0.5
+  segmentLength: 1
   nbSides: 18
 --- !u!114 &2210628214178849389
 MonoBehaviour:
@@ -68,6 +68,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e1caebedc8a5746bf28e842ab88263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentEnergy: 1000
+  biteEnergy: 100
 --- !u!65 &8747561145502825354
 BoxCollider:
   m_ObjectHideFlags: 0

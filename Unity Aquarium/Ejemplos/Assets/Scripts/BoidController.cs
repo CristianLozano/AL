@@ -13,6 +13,7 @@ public class BoidController : MonoBehaviour
     public Transform boidContainer;
 
     public LayerMask searchLayer;
+    public LayerMask predatorLayer;
 
     public List<Texture> youngPreySkins;
     public List<Texture> adultPreySkins;

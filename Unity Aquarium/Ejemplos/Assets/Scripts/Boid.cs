@@ -27,6 +27,7 @@ public class Boid : MonoBehaviour
     public float energy, reproductiveEnergy;
     public float waitTime, cooldownTime;
     public bool alive = false;
+    public bool male = false;
 
     public LayerMask plantLayer;
 
@@ -69,6 +70,9 @@ public class Boid : MonoBehaviour
 
         currentSkin  = UnityEngine.Random.Range(0, controller.youngPreySkins.Count);
         transform.GetChild(0).GetComponent<Renderer>().material.mainTexture = controller.youngPreySkins[currentSkin];
+
+        // Randomly select gender
+        male = Random.value > 0.5f;
     }
 
     void Update()
@@ -127,6 +131,7 @@ public class Boid : MonoBehaviour
                     foreach (Collider boid in nearbyBoids)
                     {
                         if (boid.gameObject.GetComponent<Boid>().alive == false) continue;
+                        if (boid.gameObject.GetComponent<Boid>().male == male) continue;
                         if (boid.gameObject == gameObject) continue;
 
                         Transform t = boid.transform;
@@ -178,6 +183,18 @@ public class Boid : MonoBehaviour
         float noise = Mathf.PerlinNoise(Time.time, noiseOffset) * 2.0f - 1.0f;
         float boidVelocity = velocity * (1.0f + noise * velocityVariation);
 
+        // Looks up nearby predators.
+        Collider[] nearbyPredators = Physics.OverlapSphere(currentPosition, neighborDist * 1.5f, controller.predatorLayer);
+        List<Collider> foundPredators = new List<Collider>(nearbyPredators);
+
+        if (foundPredators.Count > 0)
+        {
+            transform.LookAt(transform.position - (foundPredators[0].transform.position - transform.position));
+            transform.position = Vector3.MoveTowards(transform.position, foundPredators[0].transform.position, -(boidVelocity * Time.deltaTime));
+            Debug.Log("Escaping");
+            return;
+        }
+
         // Initializes the vectors.
         Vector3 separation = Vector3.zero;
         Vector3 alignment = controller.transform.forward;
@@ -215,7 +232,7 @@ public class Boid : MonoBehaviour
         }
 
         // Moves forawrd.
-        transform.position = currentPosition + transform.forward * (velocity * Time.deltaTime);
+        transform.position = currentPosition + transform.forward * (boidVelocity * Time.deltaTime);
     }
 
     public void SearchFood(Transform checkingObject, float maxRadius)
@@ -226,7 +243,7 @@ public class Boid : MonoBehaviour
 
         if (target != null)
         {
-            if (target.GetComponent<PlantEnergy>().currentEnergy == 0f)
+            if (target.GetComponent<PlantEnergy>().currentEnergy < target.GetComponent<PlantEnergy>().biteEnergy)
             {
                 target = null;
             }
@@ -252,7 +269,7 @@ public class Boid : MonoBehaviour
 
                 if(distance < closestDistance)
                 {
-                    if (plant.GetComponent<PlantEnergy>().currentEnergy > 0f)
+                    if (plant.GetComponent<PlantEnergy>().currentEnergy > plant.GetComponent<PlantEnergy>().biteEnergy)
                     {
                         closestDistance = distance;
                         chosenPlant = counter;
@@ -373,13 +390,16 @@ public class Boid : MonoBehaviour
 
                 parentTraits.reproduce = false;
                 closestBoid = null;
+
+                // Prevent getting stuck in one position after reproduction
+                GetComponent<CapsuleCollider>().enabled = false;
+                GetComponent<CapsuleCollider>().enabled = true;
             }
         }
         else if (col.collider == target)
         {
             energy += target.GetComponent<PlantEnergy>().currentEnergy;
-            target.GetComponent<PlantEnergy>().currentEnergy = 0f;
-            target.GetComponent<PlantEnergy>().ChangeColor();
+            target.GetComponent<PlantEnergy>().LoseEnergy();
             target = null;
         }
     }
