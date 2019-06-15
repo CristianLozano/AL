@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9319914c78a923d45aaa9d7cd82ee321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   speed: 4
   maxAngle: 30
   maxRadius: 20
@@ -51,6 +52,19 @@ MonoBehaviour:
   preyLayer:
     serializedVersion: 2
     m_Bits: 256
+  predatorLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  maxSize: 10
+  initialSize: {x: 0, y: 0, z: 0}
+  age: 0
+  energy: 10000
+  reproductiveEnergy: 5000
+  waitTime: 1
+  cooldownTime: 90
+  alive: 0
+  male: 0
+  reproduce: 0
 --- !u!1 &4203301645460135452
 GameObject:
   m_ObjectHideFlags: 0

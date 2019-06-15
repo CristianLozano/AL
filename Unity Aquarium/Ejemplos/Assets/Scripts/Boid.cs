@@ -322,6 +322,7 @@ public class Boid : MonoBehaviour
             changedOld = true;
         }
     }
+    
     private void LoseEnergy()
     {
         if(Time.time - lifeTime >= waitTime)
