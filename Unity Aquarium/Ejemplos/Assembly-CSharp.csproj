@@ -62,9 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Ant.cs" />
+    <Compile Include="Assets\Scripts\AntController.cs" />
     <Compile Include="Assets\Scripts\Boid.cs" />
     <Compile Include="Assets\Scripts\BoidController.cs" />
     <Compile Include="Assets\Scripts\LSystemGenerator.cs" />
+    <Compile Include="Assets\Scripts\PheromoneDecay.cs" />
     <Compile Include="Assets\Scripts\PlantEnergy.cs" />
     <Compile Include="Assets\Scripts\PlantsController.cs" />
     <Compile Include="Assets\Scripts\Predator.cs" />

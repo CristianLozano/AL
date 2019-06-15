@@ -7,6 +7,8 @@ TagManager:
   - Predator
   - Wall
   - Floor
+  - AntWall
+  - Food
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Predator
   - DeadPrey
   - Plant
-  - 
+  - Pheromone
   - 
   - 
   - 
