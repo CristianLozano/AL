@@ -25,6 +25,69 @@ public class BoidController : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < 20; i++)
+        {
+            // Load 1st batch of young prey skins
+            string path = "Sprites/PreySkins/Young/prey1_skin_child" + i;
+            Texture skin = Resources.Load<Texture>(path);
+            youngPreySkins.Add(skin);
+
+            // Load 2nd batch of young prey skins
+            path = "Sprites/PreySkins/Young/prey2_skin_child" + i;
+            skin = Resources.Load<Texture>(path);
+            youngPreySkins.Add(skin);
+
+            // Load 1st batch of adult prey skins
+            path = "Sprites/PreySkins/Adult/prey1_skin_adult" + i;
+            skin = Resources.Load<Texture>(path);
+            adultPreySkins.Add(skin);
+
+            // Load 2nd batch of adult prey skins
+            path = "Sprites/PreySkins/Adult/prey2_skin_adult" + i;
+            skin = Resources.Load<Texture>(path);
+            adultPreySkins.Add(skin);
+
+            // Load 1st batch of old prey skins
+            path = "Sprites/PreySkins/Old/prey1_skin_elder" + i;
+            skin = Resources.Load<Texture>(path);
+            oldPreySkins.Add(skin);
+
+            // Load 2nd batch of old prey skins
+            path = "Sprites/PreySkins/Old/prey2_skin_elder" + i;
+            skin = Resources.Load<Texture>(path);
+            oldPreySkins.Add(skin);
+
+            // Load 1st batch of young predator skins
+            path = "Sprites/PredatorSkins/Young/predator1_skin_child" + i;
+            skin = Resources.Load<Texture>(path);
+            youngPredatorSkins.Add(skin);
+
+            // Load 2nd batch of young predator skins
+            path = "Sprites/PredatorSkins/Young/predator2_skin_child" + i;
+            skin = Resources.Load<Texture>(path);
+            youngPredatorSkins.Add(skin);
+
+            // Load 1st batch of adult predator skins
+            path = "Sprites/PredatorSkins/Adult/predator1_skin_adult" + i;
+            skin = Resources.Load<Texture>(path);
+            adultPredatorSkins.Add(skin);
+
+            // Load 2nd batch of adult predator skins
+            path = "Sprites/PredatorSkins/Adult/predator2_skin_adult" + i;
+            skin = Resources.Load<Texture>(path);
+            adultPredatorSkins.Add(skin);
+
+            // Load 1st batch of old predator skins
+            path = "Sprites/PredatorSkins/Old/predator1_skin_elder" + i;
+            skin = Resources.Load<Texture>(path);
+            oldPredatorSkins.Add(skin);
+
+            // Load 2nd batch of old predator skins
+            path = "Sprites/PredatorSkins/Old/predator2_skin_elder" + i;
+            skin = Resources.Load<Texture>(path);
+            oldPredatorSkins.Add(skin);
+        }
+
         for (int i = 0; i < spawnCount; i++)
         {
             Spawn();

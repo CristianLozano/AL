@@ -8,22 +8,12 @@ public class PlantEnergy : MonoBehaviour
     public float biteEnergy = 100;
 
     private float maxEnergy;
-    private float recoverTime = 5f;
     private float lastRecoverTime;
 
     void Start()
     {
         maxEnergy = currentEnergy;
         lastRecoverTime = Time.time;
-    }
-
-    void Update()
-    {
-        if (Time.time - lastRecoverTime >= recoverTime)
-        {
-            GainEnergy(10f);
-            lastRecoverTime = Time.time;
-        }
     }
 
     public void LoseEnergy()

@@ -146,6 +146,7 @@ public class Boid : MonoBehaviour
                 }
                 else
                 {
+                    transform.LookAt(closestBoid);
                     transform.position = Vector3.MoveTowards(transform.position, closestBoid.position, velocity * Time.deltaTime);
                 }
             }
@@ -191,7 +192,7 @@ public class Boid : MonoBehaviour
         {
             transform.LookAt(transform.position - (foundPredators[0].transform.position - transform.position));
             transform.position = Vector3.MoveTowards(transform.position, foundPredators[0].transform.position, -(boidVelocity * Time.deltaTime));
-            Debug.Log("Escaping");
+            //Debug.Log("Escaping");
             return;
         }
 
@@ -364,10 +365,10 @@ public class Boid : MonoBehaviour
 
                 Boid childTraits = child.GetComponent<Boid>();
 
-                childTraits.velocity = (parentTraits.velocity + velocity) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.neighborDist = (parentTraits.neighborDist + neighborDist) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.maxSize = (parentTraits.maxSize + maxSize) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy) / 2f + Random.Range(-0.1f, 0.1f);
+                childTraits.velocity = (parentTraits.velocity + velocity) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.neighborDist = (parentTraits.neighborDist + neighborDist) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.maxSize = (parentTraits.maxSize + maxSize) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 childTraits.energy = 10000 + Random.Range(-100f, 100f);
                 childTraits.age = 0f;
 
@@ -375,16 +376,16 @@ public class Boid : MonoBehaviour
                 Color parent1Color = closestBoid.GetChild(0).GetComponent<Renderer>().material.color;
                 Color parent2Color = transform.GetChild(0).GetComponent<Renderer>().material.color;
                 float r, g, b = 0f;
-                r = (parent1Color.r + parent2Color.r) / 2f + Random.Range(-0.1f, 0.1f);
-                g = (parent1Color.g + parent2Color.g) / 2f + Random.Range(-0.1f, 0.1f);
-                b = (parent1Color.b + parent2Color.b) / 2f + Random.Range(-0.1f, 0.1f);
+                r = (parent1Color.r + parent2Color.r) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                g = (parent1Color.g + parent2Color.g) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                b = (parent1Color.b + parent2Color.b) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 child.transform.GetChild(0).GetComponent<Renderer>().material.color = new Color(r, g, b);
 
                 // Size mutation
                 float x, y, z = 0f;
-                x = (parentTraits.initialSize.x + initialSize.x) / 2f + Random.Range(-0.1f, 0.1f);
-                y = (parentTraits.initialSize.y + initialSize.y) / 2f + Random.Range(-0.1f, 0.1f);
-                z = (parentTraits.initialSize.z + initialSize.z) / 2f + Random.Range(-0.1f, 0.1f);
+                x = (parentTraits.initialSize.x + initialSize.x) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                y = (parentTraits.initialSize.y + initialSize.y) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                z = (parentTraits.initialSize.z + initialSize.z) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 child.transform.localScale = childTraits.initialSize = new Vector3(x, y, z);
 
                 child.transform.localPosition = transform.localPosition;

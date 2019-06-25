@@ -21,6 +21,7 @@ public class Predator : MonoBehaviour
     public float waitTime, cooldownTime;
     public bool alive = false;
     public bool male = false;
+    public float eatPreyEnergy = 1000f;
 
     private bool isInFov = false;
     private Collider target;
@@ -31,7 +32,7 @@ public class Predator : MonoBehaviour
     private float growthRate = 0.0001f;
     private float deathAge;
     private float deathTime, lifeTime, ageTime, lastReproductionMoment;
-    private float adultAge = 1f, oldAge = 7f;
+    private float adultAge = 3f, oldAge = 7f;
     private int currentSkin = 0;
     private Transform closestPredator;
     private Transform predatorContainer;
@@ -75,11 +76,17 @@ public class Predator : MonoBehaviour
         lifeTime = Time.time;
         initialSize = transform.localScale;
 
-        currentSkin  = UnityEngine.Random.Range(0, controller.youngPredatorSkins.Count);
-        transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.mainTexture = controller.youngPredatorSkins[currentSkin];
+        StartCoroutine(WaitForSkin());
 
         // Randomly select gender
         male = Random.value > 0.5f;
+    }
+
+    private IEnumerator WaitForSkin()
+    {
+        yield return new WaitForSeconds(1f);
+        currentSkin = UnityEngine.Random.Range(0, controller.youngPredatorSkins.Count);
+        transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.mainTexture = controller.youngPredatorSkins[currentSkin];
     }
 
     public bool inFOV(Transform checkingObject, float maxAngle, float maxRadius)
@@ -197,7 +204,7 @@ public class Predator : MonoBehaviour
             {
                 if(closestPredator == null)
                 {
-                    // Looks up nearby boids.
+                    // Looks up nearby predators.
                     Collider[] nearbyPredator = Physics.OverlapSphere(transform.position, maxRadius * 3, predatorLayer);
                     List<Collider> couples = new List<Collider>(nearbyPredator);
 
@@ -232,6 +239,7 @@ public class Predator : MonoBehaviour
                 }
                 else
                 {
+                    transform.LookAt(closestPredator);
                     transform.position = Vector3.MoveTowards(transform.position, closestPredator.position, speed * Time.deltaTime);
                 }
             }
@@ -312,7 +320,7 @@ public class Predator : MonoBehaviour
             // Prepare animation of swimming to continue
             animator.PlayQueued("Swim");
             target.GetComponent<Boid>().KillBoid();
-            energy += 200;
+            energy += eatPreyEnergy;
             target = null;
         }
     }
@@ -367,10 +375,10 @@ public class Predator : MonoBehaviour
 
                 Predator childTraits = child.GetComponent<Predator>();
 
-                childTraits.speed = (parentTraits.speed + speed) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.maxRadius = (parentTraits.maxRadius + maxRadius) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.maxSize = (parentTraits.maxSize + maxSize) / 2f + Random.Range(-0.1f, 0.1f);
-                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy) / 2f + Random.Range(-0.1f, 0.1f);
+                childTraits.speed = (parentTraits.speed + speed) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.maxRadius = (parentTraits.maxRadius + maxRadius) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.maxSize = (parentTraits.maxSize + maxSize) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                childTraits.reproductiveEnergy = (parentTraits.reproductiveEnergy + reproductiveEnergy) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 childTraits.energy = 10000 + Random.Range(-100f, 100f);
                 childTraits.age = 0f;
 
@@ -378,16 +386,16 @@ public class Predator : MonoBehaviour
                 Color parent1Color = closestPredator.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color;
                 Color parent2Color = transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color;
                 float r, g, b = 0f;
-                r = (parent1Color.r + parent2Color.r) / 2f + Random.Range(-0.1f, 0.1f);
-                g = (parent1Color.g + parent2Color.g) / 2f + Random.Range(-0.1f, 0.1f);
-                b = (parent1Color.b + parent2Color.b) / 2f + Random.Range(-0.1f, 0.1f);
+                r = (parent1Color.r + parent2Color.r) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                g = (parent1Color.g + parent2Color.g) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                b = (parent1Color.b + parent2Color.b) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 child.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.color = new Color(r, g, b);
 
                 // Size mutation
                 float x, y, z = 0f;
-                x = (parentTraits.initialSize.x + initialSize.x) / 2f + Random.Range(-0.1f, 0.1f);
-                y = (parentTraits.initialSize.y + initialSize.y) / 2f + Random.Range(-0.1f, 0.1f);
-                z = (parentTraits.initialSize.z + initialSize.z) / 2f + Random.Range(-0.1f, 0.1f);
+                x = (parentTraits.initialSize.x + initialSize.x) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                y = (parentTraits.initialSize.y + initialSize.y) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
+                z = (parentTraits.initialSize.z + initialSize.z) / Random.Range(1.5f, 2.5f) + Random.Range(-0.1f, 0.1f);
                 child.transform.localScale = childTraits.initialSize = new Vector3(x, y, z);
 
                 child.transform.localPosition = transform.localPosition;
